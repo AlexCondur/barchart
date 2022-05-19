@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 
 import { mdiCogOutline } from "@mdi/js";
 
@@ -6,8 +6,9 @@ import { useGetDropoutData } from "../../hooks/useGetDropoutData";
 
 import { convertNodesObjectToArray, generateBranches } from "../../utils/nodes";
 
-import Button, { IconButton } from "../Button";
+import { IconButton } from "../Button";
 import BarChart, { BarType, BarData } from "../BarChart";
+import Dropdown from "../Dropdown";
 
 import { NodeType, NodeElement } from "../../types/Node";
 
@@ -38,6 +39,11 @@ const FlowDropout = () => {
       })
     ) || [];
 
+  const handleBranchSelection = useCallback(
+    (key: string) => setActiveBranch(key.split("-")),
+    []
+  );
+
   useEffect(() => {
     if (branches.length > 0) {
       setActiveBranch(branches[0]);
@@ -50,7 +56,14 @@ const FlowDropout = () => {
         <Header>
           <p>Flow dropout per step and service</p>
           <HeaderActions>
-            <Button>Choose branches</Button>
+            <Dropdown
+              toggle="Choose branches"
+              options={branches.map((branch) => ({
+                key: branch.join("-"),
+                value: branch.join(" -> "),
+              }))}
+              onSelect={handleBranchSelection}
+            />
             <IconButton path={mdiCogOutline} />
           </HeaderActions>
         </Header>

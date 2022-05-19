@@ -4,6 +4,7 @@ import { StyledBtn } from "./styled";
 
 type Props = {
   children: string;
+  onClick: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button = ({ children, ...props }: Props) => (

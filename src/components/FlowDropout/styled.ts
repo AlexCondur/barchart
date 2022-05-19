@@ -19,7 +19,7 @@ export const HeaderActions = styled.div`
   display: flex;
   align-items: center;
 
-  > *:not(:first-of-type) {
+  > *:not(:first-child) {
     margin-left: 15px;
   }
 `;
